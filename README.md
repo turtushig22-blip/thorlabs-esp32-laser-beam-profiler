@@ -15,6 +15,7 @@
 > * **Hardware & PCB Design:** For the custom printed circuit board schematics, layout, and fabrication gerbers, please see the [`KiCad/`](#) directory.
 
 ---
+<img width="70%" height="1010" alt="image" src="https://github.com/user-attachments/assets/58edcdba-c4f6-4166-9a3a-a5a5446ed7d4" />
 
 ## Overview
 
@@ -51,6 +52,8 @@ This project delivers an automated knife-edge laser beam profiler:
                                               [ Thorlabs TST001 / NRT100 ]
 ```
 
+<img width="90%" height="613" alt="image" src="https://github.com/user-attachments/assets/2fd9b9e9-1c45-42c6-b046-227357c5e7b5" />
+
 ### Optical Specifications
 * **Lasers Used:**
   * HeNe Laser: $\lambda = 632.8\text{nm}$, TEM$_{00}$ fundamental mode.
@@ -67,6 +70,7 @@ The analog signal conditioning and digitization circuit is designed as a dedicat
 
 * **Schematic & Layout:** [`KiCad/BeamWaist.kicad_sch`](#) and [`KiCad/BeamWaist.kicad_pcb`](#)
 * **Fabrication Files:** Production Gerber archives in [`KiCad/Gerbers/`](#)
+<img width="60%" height="593" alt="image" src="https://github.com/user-attachments/assets/94913329-12db-4093-8bdf-21442174d811" />
 
 ### Key Circuit Features
 1. **Low-Pass Anti-Aliasing Filter:** First-order RC filter with $R = 10\,\text{k}\Omega$ and $C = 1\,\mu\text{F}$ ($f_c = \frac{1}{2\pi RC} \approx 15.92\,\text{Hz}$), eliminating high-frequency mechanical vibrations, laser ripple, and $60\,\text{Hz}$ ambient illumination pickup before sampling.

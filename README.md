@@ -2,68 +2,68 @@
 
 > **Sub-Micron Characterisation of HeNe and Diode Laser Beam Waists Using Thorlabs Motion Control, ESP32 Embedded DAQ, and Custom Signal Conditioning PCB**
 
-[![Status: Complete](https://img.shields.io/badge/Status-Complete-success.svg)](#)
-[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](#)
-[![Hardware: ESP32](https://img.shields.io/badge/Hardware-ESP32-red.svg)](#)
 [![EDA: KiCad 9.0](https://img.shields.io/badge/EDA-KiCad%209.0-orange.svg)](#)
 [![Optics: Thorlabs](https://img.shields.io/badge/Optics-Thorlabs%20NRT100-yellow.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](#)
 
 ---
 
-## 📌 Repository Organization & Environments
+## Repository Organization & Environments
 
 > **Note on Project Code & Hardware Files:**
-> * **Python & Analysis Environment:** To inspect the full runtime environment, virtual environment configuration, and execution pipeline, please see the [`code/`](#) folder (where `master_python.py`, fitting routines, and analysis tools are consolidated).
-> * **Hardware & PCB Design:** For the custom printed circuit board schematics, layout, BOM, and fabrication gerbers, please see the [`KiCad/`](#) directory.
+> * **Python & Analysis Tools:** To inspect the complete runtime environment and execution pipeline, please see the [`code/`](#) folder (where `master_python.py`, fitting routines, and analysis tools are stored).
+> * **Hardware & PCB Design:** For the custom printed circuit board schematics, layout, and fabrication gerbers, please see the [`KiCad/`](#) directory.
 
 ---
 
-## 📖 Overview
+## Overview
 
-Characterizing laser beam caustics, beam waists ($w_0$), and propagation quality ($M^2$) at sub-micron scales requires dense spatial sampling and low-noise radiometric instrumentation. Traditional manual knife-edge profiling suffers from coarse micrometer positioning, slow acquisition rates, and human parallax errors.
+Characterizing laser beam characteristics, beam waists (w<sub>0</sub>), and propagation quality ($M^2$) at micron-level scales requires dense spatial sampling and low-noise instrumentation. Manual knife-edge profiling suffers from coarse positioning, slow acquisition rates, and human parallax errors.
 
-This project delivers an **end-to-end automated knife-edge laser beam profiler**:
-1. **Sub-Micron Actuation:** A **Thorlabs NRT100** linear translation stage driven by a **TST001** stepper motor controller via a **TCH002** hub, stepping a precision commercial razor blade in increments as fine as **$0.5\,\mu\text{m}$** (with step support down to $0.1\,\mu\text{m}$).
-2. **Custom Signal Conditioning & Embedded DAQ:** Optical power is acquired via a **Thorlabs PM100A** optical power meter. The analog output is filtered through a hardware 1st-order RC low-pass filter ($f_c \approx 15.92\,\text{Hz}$), digitized by a 16-bit **ADS1115** ADC ($16\times$ PGA, $860\,\text{SPS}$), and managed by an **ESP32** microcontroller running custom firmware with real-time S-curve rendering on an **ILI9341** 2.8" SPI TFT display.
-3. **Automated Host Orchestration:** A Python host pipeline (`master_python.py`) synchronizes stage translation over FTDI D2XX USB drivers, introduces settling dwells ($0.5\,\text{s}$), acquires dark-background-corrected voltages, performs real-time encoder verification ($\le 2\,\mu\text{m}$ tolerance), and logs structured scan datasets.
-4. **Rigorous Statistical & Optical Modeling:** Implements non-linear complementary error function ($\mathrm{erfc}$) S-curve fits, automated initial guess routines, rolling-median $3\sigma$ outlier rejection, adaptive-window derivative comparisons (Method A vs. Method B), and **Tikhonov-regularized non-linear least-squares** propagation modeling accounting for millimeter-ruler axial positioning uncertainty ($\sigma_z \approx 0.289\,\text{mm}$).
+This project delivers an automated knife-edge laser beam profiler:
+1. **Sub-Micron Actuation:** A **Thorlabs NRT100** linear translation stage driven by a **TST001** stepper motor controller via a **TCH002** hub, stepping a precision commercial razor blade in increments as fine as **$0.5\mu\text{m}$** (with step support down to $0.1\mu\text{m}$).
+2. **Custom Signal Processing & Embedded DAQ:** Optical power is acquired via a **Thorlabs PM100A** optical power meter. The analog output is filtered through a hardware 1st-order RC low-pass filter ($f_c \approx 15.92\,\text{Hz}$), digitized by a 16-bit **ADS1115** ADC, and managed by an **ESP32** microcontroller running custom firmware with real-time S-curve rendering on an **ILI9341** 2.8" SPI TFT display.
+3. **Automated Host Organization:** A Python-based host (`master_python.py`) synchronizes stage translation, introduces settling dwells ($0.5\text{s}$), acquires dark-background-corrected voltages, performs real-time encoder verification, and logs structured scan datasets.
+4. **Statistical & Optical Modeling:** Implements non-linear error function ($\mathrm{erfc}$) S-curve fits, rolling-median $3\sigma$ outlier rejection, adaptive-window derivative comparisons (Power distribution S-curve fit vs. Intensity Gaussian curve fit), and Tikhonov-regularized non-linear least-squares propagation modeling to account for millimeter-ruler positioning uncertainty ($\sigma_z \approx 0.289\text{mm}$).
 
 ---
 
-## 🔬 Experimental Setup & Optical Architecture
+## Experimental Setup
 
 ```
- Laser Source            Keplerian Expander          Focusing Lens     Knife-Edge Plane      Power Sensor
+ Laser Source            Keplerian Expander                Focusing Lens         Knife-Edge Plane          Power Sensor
 [ HeNe / Diode ] ---> [ L1 (f=75mm) + L2 (f=160mm) ] ---> [ L3 (f=75mm) ] ---> [ Razor on NRT100 ] ---> [ Thorlabs PM100A ]
-                            (M_exp ≈ 2.13x)                                        (0.5 µm steps)               |
+                            (M_exp ≈ 2.13x)                                       (0.5 µm steps)                |
                                                                                                                 v
-                                                                                                        Analog Out (0-2V)
+                                                                                                     Analog Out (0.0-2.0 V)
+                                                                                                                |
                                                                                                                 v
                                                                                                      [ RC Low-Pass Filter ]
-                                                                                                     (fc ≈ 15.92 Hz)
+                                                                                                        (fc ≈ 15.92 Hz)
+                                                                                                                |
                                                                                                                 v
                                                                                                      [ ADS1115 16-bit ADC ]
+                                                                                                                |
                                                                                                                 v
-[ Host PC / master_python.py ] <==== USB Serial <==== [ ESP32 Microcontroller ] ====> [ ILI9341 2.8" TFT ]
-           |                                                                               (Real-Time S-Curve)
-           v (FTDI D2XX / pylablib)
-[ Thorlabs TST001 / NRT100 ]
+                                             [ Host PC / master_python.py ] <==== USB Serial <==== [ ESP32 Microcontroller ] ====> [ ILI9341 2.8" TFT ]
+                                                           |                                                                        (Real-Time S-Curve)
+                                                           v (FTDI D2XX / pylablib)
+                                              [ Thorlabs TST001 / NRT100 ]
 ```
 
 ### Optical Specifications
-* **Lasers Evaluated:**
-  * **HeNe Laser:** $\lambda = 632.8\,\text{nm}$, TEM$_{00}$ fundamental mode.
-  * **TeachSpin DLI-A Diode Laser:** Nominal $780\,\text{nm}$, experimentally calibrated at $\lambda = 780.9\,\text{nm}$ (instrument-limited linewidth $\Delta\lambda \lesssim 3\,\text{nm}$).
-* **Expander:** Keplerian telescope composed of plano-convex lenses $L_1$ ($f_1 = 7.5\,\text{cm}$) and $L_2$ ($f_2 = 16.0\,\text{cm}$) yielding magnification $M_\text{exp} \approx 2.13$.
-* **Focusing Optic:** Plano-convex singlet $L_3$ ($f_3 = 7.5\,\text{cm}$), establishing a tight waist at the knife-edge plane.
+* **Lasers Used:**
+  * HeNe Laser: $\lambda = 632.8\text{nm}$, TEM$_{00}$ fundamental mode.
+  * TeachSpin DLI-A Diode Laser: Nominal $780\text{nm}$, experimentally calibrated at $\lambda = 780.9\,\text{nm}$ (instrument-limited linewidth $\Delta\lambda \lesssim 3\text{nm}$).
+* **Expander:** Keplerian telescope composed of plano-convex lenses $L_1$ ($f_1 = 7.5\text{cm}$) and $L_2$ ($f_2 = 16.0\text{cm}$) giving a magnification $M_\text{exp} of \approx 2.13$.
+* **Focusing Optic:** Plano-convex singlet $L_3$ ($f_3 = 7.5\text{cm}$), establishing a tight waist at the knife-edge plane.
 * **Actuation Stage:** Thorlabs NRT100 with internal optical encoder ($25{,}600\,\text{microsteps/mm}$), scanning $1000$ steps ($0.5\,\text{mm}$ travel) per axial $z$-position.
 
 ---
 
-## 🛠️ Hardware & Custom PCB (`KiCad/`)
+## Hardware & Custom PCB (`KiCad/`)
 
-The analog signal conditioning and digitization circuit is designed as a dedicated PCB in **KiCad 9.0**, located in the [`KiCad/`](#) folder:
+The analog signal conditioning and digitization circuit is designed as a dedicated PCB in KiCad 9.0, located in the [`KiCad/`](#) folder:
 
 * **Schematic & Layout:** [`KiCad/BeamWaist.kicad_sch`](#) and [`KiCad/BeamWaist.kicad_pcb`](#)
 * **Fabrication Files:** Production Gerber archives in [`KiCad/Gerbers/`](#)
@@ -81,7 +81,7 @@ The analog signal conditioning and digitization circuit is designed as a dedicat
 
 ---
 
-## 💻 Embedded Firmware (`ESP32_sketch.cpp/`)
+## Embedded Firmware (`ESP32_sketch.cpp/`)
 
 Located in [`ESP32_sketch.cpp/sketch_aug21b/sketch_aug21b.ino`](#):
 * **Hardware Averaging:** Performs 64-sample burst averaging on each query ($N = 64$ at $860\,\text{SPS} \approx 18\,\text{ms}$ sampling duration) to eliminate broadband noise without adding scan latency.
@@ -91,7 +91,7 @@ Located in [`ESP32_sketch.cpp/sketch_aug21b/sketch_aug21b.ino`](#):
 
 ---
 
-## 🐍 Software Suite & Useful Scripts (`code/`)
+## Software Suite & Useful Scripts (`code/`)
 
 All data acquisition, reduction, fitting, and visualization code is housed in [`code/`](#). Below is a complete reference of the primary scripts:
 
@@ -143,7 +143,7 @@ All data acquisition, reduction, fitting, and visualization code is housed in [`
 
 ---
 
-## 📊 Summary of Experimental Results
+## Summary of Experimental Results
 
 From the comprehensive lab report draft ([`report_draft.tex`](#)):
 
@@ -160,7 +160,7 @@ $^\dagger$ *Note on Diode $M^2$: The optimization parameter converged to its phy
 
 ---
 
-## 🚀 Getting Started & Environment Setup
+## Getting Started & Environment Setup
 
 ### 1. Prerequisites
 * **Operating System:** macOS (Apple Silicon / Intel) or Linux.
@@ -213,7 +213,7 @@ python code/plot_spectrometer.py
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 .
@@ -248,7 +248,7 @@ python code/plot_spectrometer.py
 
 ---
 
-## 👥 Authors & Academic Context
+## Authors & Context
 
 * **Author:** Turtushig Dashjav ([GitHub Profile](https://github.com/placeholder-author))
 * **Supervisor:** Eric Wells, Ph.D.
@@ -257,9 +257,7 @@ python code/plot_spectrometer.py
 
 ---
 
-## 📄 License & References
-
-* **License:** [MIT License](LICENSE) (Placeholder)
+## References
 * **Key Literature:**
   * A. E. Siegman, *Lasers*, University Science Books (1986).
   * ISO 11146-1:2005, *Lasers and laser-related equipment — Test methods for laser beam widths, divergence angles and beam propagation ratios*.

@@ -222,11 +222,11 @@ python code/plot_spectrometer.py
 ```
 .
 ├── README.md                      # Comprehensive project documentation
-├── report_draft.tex               # Complete LaTeX manuscript / lab report
-├── code/                          # Unified Python codebase & runtime environment
-│   ├── master_python.py           # Automated DAQ orchestration (Thorlabs + ESP32)
+├── BeamWaist_report.tex           # Complete LaTeX report
+├── code/                          # Unified Python codebase
+│   ├── master_python.py           # Automated DAQ ecosystem (Thorlabs + ESP32)
 │   ├── beam_waist_fit.py          # Caustic propagation fitting & regularized LSQ
-│   ├── dual_fit_comparison.py     # Method A (erfc) vs Method B (derivative) comparison
+│   ├── dual_fit_comparison.py     # Method A (Power curve erfc fit) vs Method B (Intensity curve Gaussian fit) comparison
 │   ├── erfc_fitter.py             # Single-scan S-curve filter & erfc fitting (Diode)
 │   ├── erfc_fitter_hene.py        # Single-scan S-curve filter & erfc fitting (HeNe)
 │   ├── plot_spectrometer.py       # Diode spectrometer analysis & Gaussian peak fitting
@@ -254,10 +254,9 @@ python code/plot_spectrometer.py
 
 ## Authors & Context
 
-* **Author:** Turtushig Dashjav ([GitHub Profile](https://github.com/placeholder-author))
+* **Author:** Turtushig Dashjav 
 * **Supervisor:** Eric Wells, Ph.D.
 * **Affiliation:** Department of Physics, Augustana University, Sioux Falls, SD, USA
-* **Project Reference:** [Report Draft LaTeX Source](file:///Users/hongorchamdaa/Desktop/BeamWaistProject/report_draft.tex)
 
 ---
 

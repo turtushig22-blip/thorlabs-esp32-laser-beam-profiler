@@ -1,6 +1,6 @@
 # Automated High-Density Knife-Edge Laser Beam Profiler
 
-**An undergraduate experimental physics project involving the development of an automated knife-edge setup for measuring laser beam waists using Thorlabs motion control hardware and an ESP32-based data acquisition system**.
+**This repository documents an undergraduate experimental physics project focused on measuring laser beam waists using the knife-edge method. The project involved developing an automated measurement setup using Thorlabs motion-control hardware, an ESP32-based data acquisition system, custom electronics, and Python scripts for data processing and analysis. We tested the setup using a diode laser and a HeNe laser and investigated different approaches to extracting beam parameters from the measured power profiles. The repository contains the experimental data, hardware designs, acquisition software, analysis scripts, and project documentation.**.
 
 [![EDA: KiCad 9.0](https://img.shields.io/badge/EDA-KiCad%209.0-orange.svg)](#)
 [![Optics: Thorlabs](https://img.shields.io/badge/Optics-Thorlabs%20NRT100-yellow.svg)](#)

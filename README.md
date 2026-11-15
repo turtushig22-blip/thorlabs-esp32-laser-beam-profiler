@@ -70,7 +70,7 @@ Figure 2. Schematic optical train. L1 (f = 7.5 cm) and L2 (f = 16.0 cm) form a K
 The analog signal conditioning and digitization circuit is designed as a dedicated PCB in KiCad 9.0, located in the [`KiCad/`](#) folder:
 
 * **Schematic & Layout:** [`KiCad/BeamWaist.kicad_sch`](#) and [`KiCad/BeamWaist.kicad_pcb`](#)
-* **Fabrication Files:** Production Gerber archives in [`KiCad/Gerbers/`](#)
+* **Fabrication Files:** Production Gerber archives in [`KiCad/BeamWaistGerbers/`](#)
 <img width="60%" height="593" alt="image" src="https://github.com/user-attachments/assets/94913329-12db-4093-8bdf-21442174d811" /> <br>
 Figure 3. Circuit diagram of the laser power measurement acquisition electronics, showing the RC low-pass filter, ADS1115 16-bit ADC, ESP32 microcontroller, and TFT display. The PM100A analog output
 serves as the input signal, while the 100 nF capacitor between A0 and GND provides additional input filtering. The USB-serial connection and host-side data acquisition system are omitted for clarity.
@@ -137,7 +137,7 @@ From the comprehensive lab report draft ([`report_draft.tex`](#)):
 | **Nominal Reduced $\chi^2$ ($z$-exact)** | $314.7$ | $12{,}886$ |
 | **Nominal Reduced $\chi^2$ ($z$-uncertain)** | **$7.65$** | **$4.14$** |
 
-$^\dagger$ *Note on Diode $M^2$: The optimization parameter converged to its physical lower bound ($M^2 = 1.0$), resulting from semiconductor laser astigmatism (asymmetric fast vs. slow divergence axes creating shifted caustics across orthogonal transverse planes).*
+$^\dagger$ *Note on Diode $`M^2`$: The optimization parameter converged to its physical lower bound ($`M^2`$ = 1.0), resulting from semiconductor laser astigmatism (asymmetric fast vs. slow divergence axes creating shifted caustics across orthogonal transverse planes).*
 
 ---
 
@@ -165,7 +165,7 @@ pip install numpy scipy matplotlib pandas pyserial pylablib
 ```
 
 ### 3. ESP32 Firmware Flashing
-1. Open [`ESP32_sketch.cpp/sketch_aug21b/sketch_aug21b.ino`](#) in Arduino IDE.
+1. Open [`code/esp32_script.cpp`](#) in Arduino IDE.
 2. Ensure the following libraries are installed:
    * `Adafruit_GFX`
    * `Adafruit_ILI9341`
@@ -207,15 +207,12 @@ python code/plot_spectrometer.py
 │   ├── erfc_fitter.py             # Single-scan S-curve filter & erfc fitting (Diode)
 │   ├── erfc_fitter_hene.py        # Single-scan S-curve filter & erfc fitting (HeNe)
 │   ├── plot_spectrometer.py       # Diode spectrometer analysis & Gaussian peak fitting
+│   ├── esp32_script.cpp           # ESP32 firmware (ADC oversampling & TFT S-curve display)
 
 ├── KiCad/                         # Hardware electronics & custom DAQ PCB
 │   ├── BeamWaist.kicad_sch        # Circuit schematic (ADS1115, RC filter, ESP32)
 │   ├── BeamWaist.kicad_pcb        # PCB board layout & routing
 │   └── Gerbers/                   # Production-ready Gerber and drill files
-
-├── ESP32_sketch.cpp/              # Embedded firmware
-│   └── sketch_aug21b/
-│       └── sketch_aug21b.ino      # ESP32 firmware (ADC oversampling & TFT S-curve display)
 
 ├── BeamWaistData/                 # Raw experimental scan datasets (CSV)
 │   ├── beamscan_run_014.csv

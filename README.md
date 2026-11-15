@@ -236,7 +236,20 @@ python code/plot_spectrometer.py
 
 ## References
 * **Key Literature:**
-  * A. E. Siegman, *Lasers*, University Science Books (1986).
-  * ISO 11146-1:2005, *Lasers and laser-related equipment — Test methods for laser beam widths, divergence angles and beam propagation ratios*.
-  * F. M. Dickey & T. E. Holswade, *Laser Beam Shaping: Theory and Techniques*, Marcel Dekker (2000).
-  * W. H. Press et al., *Numerical Recipes: The Art of Scientific Computing*, 3rd ed., Cambridge University Press (2007).
+  * B. E. A. Saleh and M. C. Teich, Fundamentals of Photonics (Wiley Series in Pure and Applied
+Optics), 3rd. Hoboken, NJ, USA: John Wiley & Sons, 2019.
+  *  International Organization for Standardization, “Lasers and laser-related equipment — test methods
+for laser beam widths, divergence angles and beam propagation ratios — part 1: Stigmatic and simple
+astigmatic beams,” International Organization for Standardization, Geneva, Switzerland, Standard
+ISO 11146-1:2021, 2021.
+  * W. Plass, R. Maestle, K. Wittig, A. Voss, and A. Giesen, “High-resolution knife-edge laser beam
+profiling,” Optics Communications, vol. 134, no. 1–6, pp. 21–24, 1997.
+  * Photonics Media, Laser wavelength meter, https : / / www . photonics . com / Products / Laser -
+Wavelength-Meter/pr22699, Accessed: October 12, 2026.
+  * Vernier Science Education, Go direct® spectrovis® plus spectrophotometer specifications, https://www.
+vernier.com/product/go- direct- spectrovis- plus- spectrophotometer/, Accessed: October
+12, 2026, 2026.
+  * W. Plass, R. Maestle, K. Wittig, A. Voss, and A. Giesen, The irradiance profile of the astigmatic
+beam emitting from the tube with spot profile at different positions, https://www.researchgate.
+net/figure/The-irradiance-profile-of-the-astigmatic-beam-emitting-from-tube-with-
+spot-profile-at_fig6_230615553, Accessed: October 18, 2026, 1996.

@@ -238,12 +238,14 @@ python code/plot_spectrometer.py
 * **Key Literature:**
   * B. E. A. Saleh and M. C. Teich, Fundamentals of Photonics (Wiley Series in Pure and Applied
 Optics), 3rd. Hoboken, NJ, USA: John Wiley & Sons, 2019.
-  *  International Organization for Standardization, “Lasers and laser-related equipment — test methods
+  * International Organization for Standardization, “Lasers and laser-related equipment — test methods
 for laser beam widths, divergence angles and beam propagation ratios — part 1: Stigmatic and simple
 astigmatic beams,” International Organization for Standardization, Geneva, Switzerland, Standard
 ISO 11146-1:2021, 2021.
   * W. Plass, R. Maestle, K. Wittig, A. Voss, and A. Giesen, “High-resolution knife-edge laser beam
 profiling,” Optics Communications, vol. 134, no. 1–6, pp. 21–24, 1997.
+  * W. H. Press, S. A. Teukolsky, W. T. Vetterling, and B. P. Flannery, Numerical Recipes: The Art of
+Scientific Computing, 3rd ed. Cambridge University Press, 2007.
   * Photonics Media, Laser wavelength meter, https : / / www . photonics . com / Products / Laser -
 Wavelength-Meter/pr22699, Accessed: October 12, 2026.
   * Vernier Science Education, Go direct® spectrovis® plus spectrophotometer specifications, https://www.

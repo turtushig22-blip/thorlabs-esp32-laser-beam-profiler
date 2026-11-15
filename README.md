@@ -126,7 +126,7 @@ All data acquisition, reduction, fitting, and visualization code is housed in [`
 ---
 
 ## Summary of Experimental Results
-From the comprehensive lab report draft ([`report_draft.tex`](#)):
+From the comprehensive <a href="Beam_Waist_Report.pdf"> lab report</a>:
 
 | Parameter | HeNe Laser ($\lambda = 632.8\text{nm}$) | Diode Laser ($\lambda = 780.9\text{nm}$) |
 | :--- | :---: | :---: |
